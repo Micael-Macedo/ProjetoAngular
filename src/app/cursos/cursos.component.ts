@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CursoDetalheComponent } from "./curso-detalhe/curso-detalhe.component";
 import { NgFor } from '@angular/common';
+
+import { CursoDetalheComponent } from './curso-detalhe/curso-detalhe.component';
+
+import { CursosService } from './cursos.service';
 
 @Component({
   selector: 'app-cursos',
@@ -8,7 +11,10 @@ import { NgFor } from '@angular/common';
   //É necessário importar o NgFor para exibir o array
   imports: [CursoDetalheComponent, NgFor],
   templateUrl: './cursos.component.html',
-  styleUrl: './cursos.component.css'
+  styleUrl: './cursos.component.css',
+
+  //Para utilizar os services
+  providers: [CursosService]
 })
 export class CursosComponent implements OnInit {
 
@@ -16,12 +22,14 @@ export class CursosComponent implements OnInit {
   //Para definir de qualquer tipo utilize o any
   nomePortal: string
 
+  cursos: string []
+
   //Como Definir listas de algum tipo
-  cursos: string[] = ['Java', 'Ext JS', 'Angular']
 
-
-  constructor() {
+  constructor(private cursoService: CursosService) {
     this.nomePortal = "http://loiane.training"
+
+    this.cursos = this.cursoService.getCursos()
 
   }
 
